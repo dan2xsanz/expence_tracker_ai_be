@@ -2,6 +2,7 @@ package expense_tracker.expense_tracker.functions.transaction.controller;
 
 import expense_tracker.expense_tracker.config.exemption.ExemptionError;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetAllDto;
 import expense_tracker.expense_tracker.functions.transaction.service.TransactionService;
 import expense_tracker.expense_tracker.model.ApiResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class TransactionController {
 
     @PostMapping("all-transaction")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResultModel getAllTransaction(@RequestBody TransactionDto transactionDto) throws ExemptionError {
+    public ApiResultModel getAllTransaction(@RequestBody TransactionGetAllDto transactionGetAllDto) throws ExemptionError {
         return ApiResultModel.builder()
-                .resultData(transactionService.getAllTransaction(transactionDto))
+                .resultData(transactionService.getAllTransaction(transactionGetAllDto))
                 .isSuccess(true)
                 .build();
     }
