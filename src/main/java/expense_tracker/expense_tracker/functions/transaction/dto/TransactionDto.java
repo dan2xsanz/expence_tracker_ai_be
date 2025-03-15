@@ -30,7 +30,7 @@ public class TransactionDto {
     @JsonProperty("amountValue")
     private BigDecimal amountValue;
 
-    @JsonProperty("amount")
+    @JsonProperty("categoryType")
     private Integer categoryType;
 
     @JsonProperty("note")
