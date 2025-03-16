@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 
 @Data
 @Builder
@@ -21,5 +23,11 @@ public class TransactionGetAllDto {
 
     @JsonProperty("transactionType")
     private String transactionType;
+
+    @JsonProperty("dateFrom")
+    private LocalDate dateFrom;
+
+    @JsonProperty("dateTo")
+    private LocalDate dateTo;
 
 }

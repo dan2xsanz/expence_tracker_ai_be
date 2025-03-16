@@ -47,6 +47,11 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
 
         }
 
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getDateFrom()) && ObjectUtils.isNotEmpty(transactionGetAllDto.getDateTo())) {
+            queryBuilder.append(String.format("AND date BETWEEN '%s' AND '%s'  ", transactionGetAllDto.getDateFrom(), transactionGetAllDto.getDateTo()));
+
+        }
+
         // RETRIEVE PAGINATED SALES TRANSACTION SYNCING DTO FROM THE DATABASE
         return jdbcTemplate.query(queryBuilder.toString(), new BeanPropertyRowMapper<>(TransactionDto.class));
     }
