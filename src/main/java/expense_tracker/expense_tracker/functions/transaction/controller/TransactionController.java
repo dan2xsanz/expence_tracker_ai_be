@@ -33,4 +33,22 @@ public class TransactionController {
                 .isSuccess(true)
                 .build();
     }
+
+    @GetMapping("daily-expense")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel getAllDailyExpense() throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(transactionService.getAllDailyExpense())
+                .isSuccess(true)
+                .build();
+    }
+
+    @GetMapping("monthly-expense")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel getAllMonthlyExpense() throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(transactionService.getAllMonthlyExpense())
+                .isSuccess(true)
+                .build();
+    }
 }
