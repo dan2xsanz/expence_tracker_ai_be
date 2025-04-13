@@ -29,3 +29,5 @@ server:
 # (Change the value with the corresponding metro exp value in the terminal)
 allowed:
   origin: http://localhost:3000, exp://192.168.1.7
+
+chat-bot-key: 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

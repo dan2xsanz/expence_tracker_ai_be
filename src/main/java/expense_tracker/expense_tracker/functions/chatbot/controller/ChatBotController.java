@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/chat-bmo")
 public class ChatBotController {
+
+    @Value("")
+    private String chatBotKey;
 
     @PostMapping("/ask-me")
     @ResponseStatus(HttpStatus.OK)
