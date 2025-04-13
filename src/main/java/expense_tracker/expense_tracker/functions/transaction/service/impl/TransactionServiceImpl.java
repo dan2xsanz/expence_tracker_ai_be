@@ -7,6 +7,7 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetAllDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.repository.TransactionRepository;
 import expense_tracker.expense_tracker.functions.transaction.repository.custom.TransactionCustomRepository;
 import expense_tracker.expense_tracker.functions.transaction.service.TransactionService;
@@ -75,5 +76,11 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         return monthlyExpenseListResponse;
+    }
+
+    @Override
+    public List<YearlyExpenseDto> getAllYearlyExpense() {
+        return transactionCustomRepository.getAllYearlyExpense();
+
     }
 }

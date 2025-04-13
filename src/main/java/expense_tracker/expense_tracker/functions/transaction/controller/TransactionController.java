@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("transaction")
 public class TransactionController {
@@ -48,6 +49,15 @@ public class TransactionController {
     public ApiResultModel getAllMonthlyExpense() throws ExemptionError {
         return ApiResultModel.builder()
                 .resultData(transactionService.getAllMonthlyExpense())
+                .isSuccess(true)
+                .build();
+    }
+
+    @GetMapping("yearly-expense")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel getAllYearlyExpense() throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(transactionService.getAllYearlyExpense())
                 .isSuccess(true)
                 .build();
     }

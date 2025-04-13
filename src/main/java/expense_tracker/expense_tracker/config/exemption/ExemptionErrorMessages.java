@@ -4,6 +4,8 @@ public enum ExemptionErrorMessages implements ExemptionErrorMessageBase {
 
     EMAIL_ALREADY_EXIST_MESSAGE("EmailExist", "Email already exist. Please try new email."),
 
+    THIRD_PARTY_ERROR_MESSAGE("ThirdParty", "Something went wrong with Hugging Face API response"),
+
     GENERIC_EXCEPTION_MESSAGE("GenericError", "An error occurred while processing your request. Please try again later.");
 
     private final String code;

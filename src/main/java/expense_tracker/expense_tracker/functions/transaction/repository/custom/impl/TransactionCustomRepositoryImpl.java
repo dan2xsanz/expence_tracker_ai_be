@@ -4,6 +4,7 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetAllDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.repository.custom.TransactionCustomRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,4 +83,23 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
         return jdbcTemplate.query(mainQuery, new BeanPropertyRowMapper<>(MonthlyExpenseDto.class));
     }
 
+    public List<YearlyExpenseDto> getAllYearlyExpense() {
+        String mainQuery = "SELECT " +
+                "    MONTHNAME(STR_TO_DATE(CONCAT('2024-', LPAD(m.month, 2, '0'), '-01'), '%Y-%m-%d')) AS transactionMonth, " +
+                "    COALESCE(SUM(CASE WHEN t.transactionType = 'IN' THEN t.amountValue ELSE 0 END), 0) AS transactionIn, " +
+                "    COALESCE(SUM(CASE WHEN t.transactionType = 'OUT' THEN t.amountValue ELSE 0 END), 0) AS transactionOut " +
+                "FROM ( " +
+                "    SELECT 1 AS month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL\n" +
+                "    SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL\n" +
+                "    SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL\n" +
+                "    SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12\n" +
+                ") AS m " +
+                "LEFT JOIN bmo_db.transactionmaster t  " +
+                "    ON MONTH(t.date) = m.month " +
+                "    AND YEAR(t.date) = YEAR(CURRENT_DATE()) " +
+                "GROUP BY m.month " +
+                "ORDER BY m.month;";
+
+        return jdbcTemplate.query(mainQuery, new BeanPropertyRowMapper<>(YearlyExpenseDto.class));
+    }
 }
