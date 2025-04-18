@@ -1,5 +1,6 @@
 package expense_tracker.expense_tracker.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -41,5 +42,11 @@ public class TransactionMaster extends Auditable {
 
     @JsonProperty("paymentType")
     private Integer paymentType;
+
+    @ManyToOne
+    @JoinColumn(name = "accountMasterId", nullable = false)
+    @JsonBackReference
+    private AccountMaster accountMaster;
+
 
 }
