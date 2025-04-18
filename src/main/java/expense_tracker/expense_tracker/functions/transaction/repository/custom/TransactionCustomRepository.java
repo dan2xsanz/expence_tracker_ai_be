@@ -5,6 +5,8 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetA
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalRequestDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalResponseDto;
 
 import java.util.List;
 
@@ -18,4 +20,10 @@ public interface TransactionCustomRepository {
     List<MonthlyExpenseDto> getAllMonthExpense();
 
     List<YearlyExpenseDto> getAllYearlyExpense();
+
+    TransactionTotalResponseDto getAllTransactionWeekly(TransactionTotalRequestDto transactionTotalRequestDto);
+
+    TransactionTotalResponseDto getAllTransactionMonthly(TransactionTotalRequestDto transactionTotalRequestDto);
+
+    TransactionTotalResponseDto getAllTransactionYearly(TransactionTotalRequestDto transactionTotalRequestDto);
 }

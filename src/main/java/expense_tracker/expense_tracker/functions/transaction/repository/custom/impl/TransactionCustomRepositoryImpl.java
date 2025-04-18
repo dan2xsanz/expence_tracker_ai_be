@@ -5,6 +5,8 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetA
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalRequestDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalResponseDto;
 import expense_tracker.expense_tracker.functions.transaction.repository.custom.TransactionCustomRepository;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +103,55 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "ORDER BY m.month;";
 
         return jdbcTemplate.query(mainQuery, new BeanPropertyRowMapper<>(YearlyExpenseDto.class));
+    }
+
+    public TransactionTotalResponseDto getAllTransactionWeekly(TransactionTotalRequestDto transactionTotalRequestDto) {
+
+        String mainQuery = "SELECT " +
+                "    (SELECT SUM(amountValue) " +
+                "     FROM TransactionMaster " +
+                "     WHERE date BETWEEN DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY) " +
+                "                   AND DATE_ADD(CURDATE(), INTERVAL 7 - DAYOFWEEK(CURDATE()) DAY) " +
+                "       AND transactionType = 'IN') AS totalIncome, " +
+                " " +
+                "    (SELECT SUM(amountValue) " +
+                "     FROM TransactionMaster " +
+                "     WHERE date BETWEEN DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY) " +
+                "                   AND DATE_ADD(CURDATE(), INTERVAL 7 - DAYOFWEEK(CURDATE()) DAY) " +
+                "       AND transactionType = 'OUT') AS totalExpense;";
+
+        return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
+    }
+
+    public TransactionTotalResponseDto getAllTransactionMonthly(TransactionTotalRequestDto transactionTotalRequestDto) {
+
+        String mainQuery = "SELECT " +
+                "(SELECT SUM(amountValue) " +
+                "FROM TransactionMaster " +
+                "WHERE MONTH(date) = MONTH(CURDATE()) " +
+                "  AND YEAR(date) = YEAR(CURDATE())  " +
+                "  AND transactionType = 'IN') AS totalIncome, " +
+                "    (SELECT SUM(amountValue) " +
+                "FROM TransactionMaster " +
+                "WHERE MONTH(date) = MONTH(CURDATE()) " +
+                "  AND YEAR(date) = YEAR(CURDATE())  " +
+                "      AND transactionType = 'OUT') AS totalExpense;";
+
+        return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
+    }
+
+    public TransactionTotalResponseDto getAllTransactionYearly(TransactionTotalRequestDto transactionTotalRequestDto) {
+
+        String mainQuery = "SELECT " +
+                "(SELECT SUM(amountValue) " +
+                "FROM TransactionMaster " +
+                "WHERE  YEAR(date) = YEAR(CURDATE()) " +
+                "  AND transactionType = 'IN') AS totalIncome, " +
+                "    (SELECT SUM(amountValue) " +
+                "FROM TransactionMaster " +
+                "WHERE YEAR(date) = YEAR(CURDATE())  " +
+                "      AND transactionType = 'OUT') AS totalExpense;";
+
+        return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
     }
 }

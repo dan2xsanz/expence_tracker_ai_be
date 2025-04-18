@@ -5,13 +5,14 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetA
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalRequestDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalResponseDto;
 
 import java.util.List;
 
 public interface TransactionService {
 
     TransactionDto createNewTransaction(TransactionDto transactionDto);
-
 
     List<TransactionDto> getAllTransaction(TransactionGetAllDto transactionDto);
 
@@ -20,4 +21,6 @@ public interface TransactionService {
     List<MonthlyExpenseDto> getAllMonthlyExpense();
 
     List<YearlyExpenseDto> getAllYearlyExpense();
+
+    TransactionTotalResponseDto getTotalTransactionsSummary(TransactionTotalRequestDto transactionTotalRequestDto);
 }

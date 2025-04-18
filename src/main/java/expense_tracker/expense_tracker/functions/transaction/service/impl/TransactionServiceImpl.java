@@ -8,6 +8,8 @@ import expense_tracker.expense_tracker.functions.transaction.dto.TransactionGetA
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.DailyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.MonthlyExpenseDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.reports.YearlyExpenseDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalRequestDto;
+import expense_tracker.expense_tracker.functions.transaction.dto.totals.TransactionTotalResponseDto;
 import expense_tracker.expense_tracker.functions.transaction.repository.TransactionRepository;
 import expense_tracker.expense_tracker.functions.transaction.repository.custom.TransactionCustomRepository;
 import expense_tracker.expense_tracker.functions.transaction.service.TransactionService;
@@ -17,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionRepository transactionRepository;
 
     @Override
+    @Transactional
     public TransactionDto createNewTransaction(TransactionDto transactionDto) {
 
         TransactionMaster transactionMaster = new TransactionMaster();
@@ -82,5 +86,19 @@ public class TransactionServiceImpl implements TransactionService {
     public List<YearlyExpenseDto> getAllYearlyExpense() {
         return transactionCustomRepository.getAllYearlyExpense();
 
+    }
+
+    @Override
+    public TransactionTotalResponseDto getTotalTransactionsSummary(TransactionTotalRequestDto transactionTotalRequestDto) {
+
+        return switch (transactionTotalRequestDto.getFilterType()) {
+            // WEEKLY FILTER
+            case "1" -> transactionCustomRepository.getAllTransactionWeekly(transactionTotalRequestDto);
+            // MONTHLY FILTER
+            case "2" -> transactionCustomRepository.getAllTransactionMonthly(transactionTotalRequestDto);
+            // YEARLY FILTER
+            case "3" -> transactionCustomRepository.getAllTransactionYearly(transactionTotalRequestDto);
+            default -> null;
+        };
     }
 }
