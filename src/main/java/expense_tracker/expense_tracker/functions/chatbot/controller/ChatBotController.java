@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/chat-bmo")
 public class ChatBotController {
 
-    @Value("")
+    @Value("chat-bot-key")
     private String chatBotKey;
 
     @PostMapping("/ask-me")
@@ -60,7 +60,7 @@ public class ChatBotController {
         Request request = new Request.Builder()
                 .url("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1")
                 .post(requestBody)
-                .addHeader("Authorization", "Bearer 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")
+                .addHeader("Authorization", "Bearer " + chatBotKey)
                 .addHeader("Content-Type", "application/json")
                 .build();
 

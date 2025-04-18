@@ -30,4 +30,4 @@ server:
 allowed:
   origin: http://localhost:3000, exp://192.168.1.7
 
-chat-bot-key: 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
+chat-bot-key: add-chat-bot-key-here
