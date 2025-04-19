@@ -24,10 +24,4 @@ server:
     context-path: /api/
   port: 8080
 
-
-# NOTE: FOR LOCAL TESTING
-# (Change the value with the corresponding metro exp value in the terminal)
-allowed:
-  origin: http://localhost:3000, exp://192.168.1.7
-
 chat-bot-key: add-chat-bot-key-here
