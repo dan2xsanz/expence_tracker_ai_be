@@ -16,7 +16,8 @@ public class AccountMasterServiceImpl implements AccountMasterService {
     @Autowired
     private AccountMasterRepository accountMasterRepository;
 
-    public AccountMaster createAccount(AccountMasterDto accountMasterDto) {
+    @Override
+    public AccountMaster createAccount(AccountMasterDto accountMasterDto) throws ExemptionError {
 
         // VALIDATE ACCOUNT VIA EMAIL
         if (accountMasterRepository.validateEmail(accountMasterDto.getEmail()).isPresent()) {
@@ -26,6 +27,19 @@ public class AccountMasterServiceImpl implements AccountMasterService {
         AccountMaster accountMaster = new AccountMaster();
         BeanUtils.copyProperties(accountMasterDto, accountMaster);
 
+        accountMasterRepository.save(accountMaster);
+        return accountMaster;
+
+    }
+
+
+    @Override
+    public AccountMaster updatePassword(AccountMasterDto accountMasterDto) throws ExemptionError {
+        // VALIDATE ACCOUNT VIA EMAIL
+        AccountMaster accountMaster = accountMasterRepository.validateEmail(accountMasterDto.getEmail()).
+                orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.EMAIL_NOT_FOUND));
+
+        accountMaster.setPassword(accountMasterDto.getPassword());
         accountMasterRepository.save(accountMaster);
         return accountMaster;
 

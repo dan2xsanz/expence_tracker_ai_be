@@ -24,4 +24,13 @@ public class AccountMasterController {
                 .isSuccess(true)
                 .build();
     }
+
+    @PutMapping("update-password")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel updatePassword(@RequestBody AccountMasterDto accountMasterDto) throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(accountMasterService.updatePassword(accountMasterDto))
+                .isSuccess(true)
+                .build();
+    }
 }
