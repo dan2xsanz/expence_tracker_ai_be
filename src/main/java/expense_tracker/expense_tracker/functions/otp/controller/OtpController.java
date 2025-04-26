@@ -28,9 +28,9 @@ public class OtpController {
     @PostMapping("verify-otp")
     @ResponseStatus(HttpStatus.OK)
     public ApiResultModel verifyOtp(@RequestBody VerifyOtp verifyOtp) throws ExemptionError {
+        otpService.validateUserNameOtp(verifyOtp);
         return ApiResultModel.builder()
                 .isSuccess(true)
-                .resultData(otpService.validateUserNameOtp(verifyOtp))
                 .build();
     }
 }

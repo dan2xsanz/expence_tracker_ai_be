@@ -52,7 +52,7 @@ public class OtpServiceImpl implements OtpService {
     }
 
     @Override
-    public Object validateUserNameOtp(VerifyOtp verifyOtp) throws ExemptionError {
+    public void validateUserNameOtp(VerifyOtp verifyOtp) throws ExemptionError {
 
         Long otpId = otpRepository.validateUserNameOtp(verifyOtp);
 
@@ -60,8 +60,6 @@ public class OtpServiceImpl implements OtpService {
             throw new ExemptionError(ExemptionErrorMessages.OTP_INVALID);
 
         }
-
-        return null;
     }
 
     @Override

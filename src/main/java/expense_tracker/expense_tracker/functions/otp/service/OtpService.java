@@ -12,7 +12,7 @@ public interface OtpService {
 
     void updateCurrentOtp(OtpDto otpDto);
 
-    Object validateUserNameOtp(VerifyOtp verifyOtp) throws ExemptionError;
+    void validateUserNameOtp(VerifyOtp verifyOtp) throws ExemptionError;
 
     AccountMaster sendOtpRequest(SendOtp sendOtp) throws ExemptionError;
 }
