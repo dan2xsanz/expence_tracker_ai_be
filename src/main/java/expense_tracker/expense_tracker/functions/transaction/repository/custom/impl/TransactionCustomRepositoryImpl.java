@@ -40,7 +40,7 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
 
         queryBuilder.append(mainQuery);
 
-        queryBuilder.append(String.format("WHERE accountMasterId = '%s' ", "1"));
+        queryBuilder.append(String.format("WHERE accountMasterId = '%s' ", transactionGetAllDto.getAccountMasterId()));
 
         if (ObjectUtils.isNotEmpty(transactionGetAllDto.getTransactionType())) {
             queryBuilder.append(String.format("AND transactionType = '%s' ", transactionGetAllDto.getTransactionType()));
@@ -62,30 +62,33 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
     }
 
 
-    public List<DailyExpenseDto> getAllDailyExpense() {
+    public List<DailyExpenseDto> getAllDailyExpense(Long accountMasterId) {
 
         String mainQuery = "SELECT " +
                 "categoryType as categoryId, " +
                 "SUM(amountValue) as amountValue  " +
                 "FROM TransactionMaster  " +
-                "WHERE date  = CURRENT_DATE GROUP BY categoryType " +
+                "WHERE date  = CURRENT_DATE " +
+                "AND accountMasterId = '" + accountMasterId + "' " +
+                "GROUP BY categoryType " +
                 "ORDER BY categoryType ASC";
 
         return jdbcTemplate.query(mainQuery, new BeanPropertyRowMapper<>(DailyExpenseDto.class));
     }
 
 
-    public List<MonthlyExpenseDto> getAllMonthExpense() {
+    public List<MonthlyExpenseDto> getAllMonthExpense(Long accountMasterId) {
         String mainQuery = "SELECT categoryType as expenseId, null as expenseName,  SUM(amountValue) as totalExpense FROM TransactionMaster " +
                 "WHERE  MONTH(date) = MONTH(CURRENT_DATE()) " +
                 "AND YEAR(date) = YEAR(CURRENT_DATE) " +
                 "AND transactionType = 'OUT' " +
+                "AND accountMasterId = '" + accountMasterId + "' " +
                 "GROUP BY categoryType;";
 
         return jdbcTemplate.query(mainQuery, new BeanPropertyRowMapper<>(MonthlyExpenseDto.class));
     }
 
-    public List<YearlyExpenseDto> getAllYearlyExpense() {
+    public List<YearlyExpenseDto> getAllYearlyExpense(Long accountMasterId) {
         String mainQuery = "SELECT " +
                 "    MONTHNAME(STR_TO_DATE(CONCAT('2024-', LPAD(m.month, 2, '0'), '-01'), '%Y-%m-%d')) AS transactionMonth, " +
                 "    COALESCE(SUM(CASE WHEN t.transactionType = 'IN' THEN t.amountValue ELSE 0 END), 0) AS transactionIn, " +
@@ -99,6 +102,7 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "LEFT JOIN bmo_db.transactionmaster t  " +
                 "    ON MONTH(t.date) = m.month " +
                 "    AND YEAR(t.date) = YEAR(CURRENT_DATE()) " +
+                "    AND t.accountMasterId = '" + accountMasterId + "' " +
                 "GROUP BY m.month " +
                 "ORDER BY m.month;";
 
@@ -112,13 +116,17 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "     FROM TransactionMaster " +
                 "     WHERE date BETWEEN DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY) " +
                 "                   AND DATE_ADD(CURDATE(), INTERVAL 7 - DAYOFWEEK(CURDATE()) DAY) " +
-                "       AND transactionType = 'IN') AS totalIncome, " +
+                "       AND transactionType = 'IN' " +
+                "       AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                ") AS totalIncome, " +
                 " " +
                 "    (SELECT SUM(amountValue) " +
                 "     FROM TransactionMaster " +
                 "     WHERE date BETWEEN DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE()) - 1 DAY) " +
                 "                   AND DATE_ADD(CURDATE(), INTERVAL 7 - DAYOFWEEK(CURDATE()) DAY) " +
-                "       AND transactionType = 'OUT') AS totalExpense;";
+                "       AND transactionType = 'OUT' " +
+                "       AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                ") AS totalExpense; ";
 
         return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
     }
@@ -130,12 +138,16 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "FROM TransactionMaster " +
                 "WHERE MONTH(date) = MONTH(CURDATE()) " +
                 "  AND YEAR(date) = YEAR(CURDATE())  " +
-                "  AND transactionType = 'IN') AS totalIncome, " +
+                "  AND transactionType = 'IN' " +
+                "  AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                ") AS totalIncome, " +
                 "    (SELECT SUM(amountValue) " +
                 "FROM TransactionMaster " +
                 "WHERE MONTH(date) = MONTH(CURDATE()) " +
                 "  AND YEAR(date) = YEAR(CURDATE())  " +
-                "      AND transactionType = 'OUT') AS totalExpense;";
+                "  AND transactionType = 'OUT' " +
+                "  AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                ") AS totalExpense;";
 
         return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
     }
@@ -146,11 +158,15 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "(SELECT SUM(amountValue) " +
                 "FROM TransactionMaster " +
                 "WHERE  YEAR(date) = YEAR(CURDATE()) " +
-                "  AND transactionType = 'IN') AS totalIncome, " +
+                "  AND transactionType = 'IN' " +
+                "  AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                ") AS totalIncome, " +
                 "    (SELECT SUM(amountValue) " +
                 "FROM TransactionMaster " +
                 "WHERE YEAR(date) = YEAR(CURDATE())  " +
-                "      AND transactionType = 'OUT') AS totalExpense;";
+                "      AND transactionType = 'OUT'" +
+                "      AND accountMasterId = '" + transactionTotalRequestDto.getAccountMasterId() + "' " +
+                " ) AS totalExpense;";
 
         return jdbcTemplate.queryForObject(mainQuery, new BeanPropertyRowMapper<>(TransactionTotalResponseDto.class));
     }

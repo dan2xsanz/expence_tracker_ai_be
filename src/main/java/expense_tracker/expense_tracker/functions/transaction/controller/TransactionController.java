@@ -36,29 +36,29 @@ public class TransactionController {
                 .build();
     }
 
-    @GetMapping("daily-expense")
+    @GetMapping("daily-expense/{accountMasterId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResultModel getAllDailyExpense() throws ExemptionError {
+    public ApiResultModel getAllDailyExpense(@PathVariable Long accountMasterId) throws ExemptionError {
         return ApiResultModel.builder()
-                .resultData(transactionService.getAllDailyExpense())
+                .resultData(transactionService.getAllDailyExpense(accountMasterId))
                 .isSuccess(true)
                 .build();
     }
 
-    @GetMapping("monthly-expense")
+    @GetMapping("monthly-expense/{accountMasterId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResultModel getAllMonthlyExpense() throws ExemptionError {
+    public ApiResultModel getAllMonthlyExpense(@PathVariable Long accountMasterId) throws ExemptionError {
         return ApiResultModel.builder()
-                .resultData(transactionService.getAllMonthlyExpense())
+                .resultData(transactionService.getAllMonthlyExpense(accountMasterId))
                 .isSuccess(true)
                 .build();
     }
 
-    @GetMapping("yearly-expense")
+    @GetMapping("yearly-expense/{accountMasterId}")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResultModel getAllYearlyExpense() throws ExemptionError {
+    public ApiResultModel getAllYearlyExpense(@PathVariable Long accountMasterId) throws ExemptionError {
         return ApiResultModel.builder()
-                .resultData(transactionService.getAllYearlyExpense())
+                .resultData(transactionService.getAllYearlyExpense(accountMasterId))
                 .isSuccess(true)
                 .build();
     }

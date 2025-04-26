@@ -1,6 +1,8 @@
 package expense_tracker.expense_tracker.functions.transaction.service.impl;
 
 
+import expense_tracker.expense_tracker.config.exemption.ExemptionError;
+import expense_tracker.expense_tracker.config.exemption.ExemptionErrorMessages;
 import expense_tracker.expense_tracker.enums.ExpenseTypeEnums;
 import expense_tracker.expense_tracker.functions.account.repository.AccountMasterRepository;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
@@ -42,8 +44,8 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionMaster transactionMaster = new TransactionMaster();
         BeanUtils.copyProperties(transactionDto, transactionMaster);
 
-        // TODO
-        AccountMaster accountMaster = accountMasterRepository.findAccountById(1L);
+        AccountMaster accountMaster = accountMasterRepository.findAccountById(transactionDto.getAccountMasterId())
+                .orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.GENERIC_EXCEPTION_MESSAGE));
         transactionMaster.setAccountMaster(accountMaster);
 
         transactionRepository.save(transactionMaster);
@@ -57,17 +59,17 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<DailyExpenseDto> getAllDailyExpense() {
-        return transactionCustomRepository.getAllDailyExpense();
+    public List<DailyExpenseDto> getAllDailyExpense(Long accountMasterId) {
+        return transactionCustomRepository.getAllDailyExpense(accountMasterId);
 
     }
 
     @Override
-    public List<MonthlyExpenseDto> getAllMonthlyExpense() {
+    public List<MonthlyExpenseDto> getAllMonthlyExpense(Long accountMasterId) {
 
         List<MonthlyExpenseDto> monthlyExpenseListResponse = new ArrayList<>();
 
-        List<MonthlyExpenseDto> monthlyExpenseList = transactionCustomRepository.getAllMonthExpense();
+        List<MonthlyExpenseDto> monthlyExpenseList = transactionCustomRepository.getAllMonthExpense(accountMasterId);
 
         if (!monthlyExpenseList.isEmpty()) {
             for (MonthlyExpenseDto monthlyExpense : monthlyExpenseList) {
@@ -83,8 +85,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<YearlyExpenseDto> getAllYearlyExpense() {
-        return transactionCustomRepository.getAllYearlyExpense();
+    public List<YearlyExpenseDto> getAllYearlyExpense(Long accountMasterId) {
+        return transactionCustomRepository.getAllYearlyExpense(accountMasterId);
 
     }
 

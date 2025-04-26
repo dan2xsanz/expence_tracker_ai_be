@@ -15,11 +15,11 @@ public interface TransactionCustomRepository {
 
     List<TransactionDto> listOfTransaction(TransactionGetAllDto transactionGetAllDto);
 
-    List<DailyExpenseDto> getAllDailyExpense();
+    List<DailyExpenseDto> getAllDailyExpense(Long accountMasterId);
 
-    List<MonthlyExpenseDto> getAllMonthExpense();
+    List<MonthlyExpenseDto> getAllMonthExpense(Long accountMasterId);
 
-    List<YearlyExpenseDto> getAllYearlyExpense();
+    List<YearlyExpenseDto> getAllYearlyExpense(Long accountMasterId);
 
     TransactionTotalResponseDto getAllTransactionWeekly(TransactionTotalRequestDto transactionTotalRequestDto);
 
