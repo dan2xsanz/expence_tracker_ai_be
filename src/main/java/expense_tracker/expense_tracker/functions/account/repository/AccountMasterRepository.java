@@ -13,9 +13,12 @@ public interface AccountMasterRepository extends JpaRepository<AccountMaster, Lo
 
     @Query(value = "SELECT * FROM AccountMaster " +
             "WHERE id =:accountMasterId ", nativeQuery = true)
-    AccountMaster findAccountById(@Param("accountMasterId") Long accountMasterId);
+    Optional<AccountMaster> findAccountById(@Param("accountMasterId") Long accountMasterId);
 
     @Query(value = "SELECT * FROM AccountMaster " +
             "WHERE email =:email ", nativeQuery = true)
     Optional<AccountMaster> validateEmail(@Param("email") String email);
+
+    @Query(value = "SELECT * FROM AccountMaster WHERE BINARY email = :email", nativeQuery = true)
+    Optional<AccountMaster> loginByEmail(@Param("email") String email);
 }

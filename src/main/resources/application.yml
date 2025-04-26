@@ -15,6 +15,16 @@ spring:
     show-sql: "true"
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dlsanz.asi@gmail.com
+    password: umvm uben yagx msyc
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.trust: smtp.gmail.com
+
 server:
   servlet:
     session:
@@ -23,11 +33,5 @@ server:
         same-site: strict
     context-path: /api/
   port: 8080
-
-
-# NOTE: FOR LOCAL TESTING
-# (Change the value with the corresponding metro exp value in the terminal)
-allowed:
-  origin: http://localhost:3000, exp://192.168.1.7
 
 chat-bot-key: add-chat-bot-key-here

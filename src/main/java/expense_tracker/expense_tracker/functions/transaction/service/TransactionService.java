@@ -16,11 +16,11 @@ public interface TransactionService {
 
     List<TransactionDto> getAllTransaction(TransactionGetAllDto transactionDto);
 
-    List<DailyExpenseDto> getAllDailyExpense();
+    List<DailyExpenseDto> getAllDailyExpense(Long accountMasterId);
 
-    List<MonthlyExpenseDto> getAllMonthlyExpense();
+    List<MonthlyExpenseDto> getAllMonthlyExpense(Long accountMasterId);
 
-    List<YearlyExpenseDto> getAllYearlyExpense();
+    List<YearlyExpenseDto> getAllYearlyExpense(Long accountMasterId);
 
     TransactionTotalResponseDto getTotalTransactionsSummary(TransactionTotalRequestDto transactionTotalRequestDto);
 }
