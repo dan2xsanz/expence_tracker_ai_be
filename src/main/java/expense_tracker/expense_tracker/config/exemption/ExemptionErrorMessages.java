@@ -11,6 +11,10 @@ public enum ExemptionErrorMessages implements ExemptionErrorMessageBase {
 
     OTP_INVALID("InvalidOtp", "Invalid OTP, Please try again."),
 
+    INVALID_LOGIN("InvalidLogin", "Username not found. Please try again."),
+
+    INVALID_PASSWORD("InvalidPassword", "Password does not match with the user name. Please try again."),
+
     GENERIC_EXCEPTION_MESSAGE("GenericError", "An error occurred while processing your request. Please try again later.");
 
     private final String code;
