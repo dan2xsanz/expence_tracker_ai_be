@@ -69,6 +69,7 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "SUM(amountValue) as amountValue  " +
                 "FROM TransactionMaster  " +
                 "WHERE date  = CURRENT_DATE " +
+                "AND transactionType = 'OUT' " +
                 "AND accountMasterId = '" + accountMasterId + "' " +
                 "GROUP BY categoryType " +
                 "ORDER BY categoryType ASC";
