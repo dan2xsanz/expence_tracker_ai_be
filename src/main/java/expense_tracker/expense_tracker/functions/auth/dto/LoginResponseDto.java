@@ -21,6 +21,8 @@ public class LoginResponseDto {
     @JsonProperty("email")
     private String email;
 
+    private String currency;
+
     // TODO: TOKENS BELOW WITH JWT
 
 }

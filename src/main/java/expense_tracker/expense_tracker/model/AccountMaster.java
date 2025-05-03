@@ -30,4 +30,7 @@ public class AccountMaster {
     @JsonProperty("password")
     private String password;
 
+    @JsonProperty("currency")
+    private String currency;
+
 }

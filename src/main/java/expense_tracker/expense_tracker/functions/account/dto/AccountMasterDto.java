@@ -19,4 +19,6 @@ public class AccountMasterDto {
 
     private String password;
 
+    private String currency;
+
 }
