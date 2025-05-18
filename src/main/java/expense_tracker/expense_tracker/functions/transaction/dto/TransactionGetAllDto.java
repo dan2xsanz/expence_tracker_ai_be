@@ -30,4 +30,5 @@ public class TransactionGetAllDto {
     @JsonProperty("dateTo")
     private LocalDate dateTo;
 
+    private Boolean isArchiveTransaction;
 }

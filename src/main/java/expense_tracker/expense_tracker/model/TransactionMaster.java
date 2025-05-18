@@ -43,6 +43,9 @@ public class TransactionMaster extends Auditable {
     @JsonProperty("paymentType")
     private Integer paymentType;
 
+    @JsonProperty("isArchiveTransaction")
+    private boolean isArchiveTransaction;
+
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)
     @JsonBackReference

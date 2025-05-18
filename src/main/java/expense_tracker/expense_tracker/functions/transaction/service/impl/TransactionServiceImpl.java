@@ -53,6 +53,24 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
+    public TransactionDto updateTransaction(TransactionDto transactionDto) {
+
+        AccountMaster accountMaster = accountMasterRepository.findAccountById(transactionDto.getAccountMasterId())
+                .orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.GENERIC_EXCEPTION_MESSAGE));
+
+        TransactionMaster transactionMaster = transactionRepository.findTransactionById(transactionDto.getId())
+                .orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.GENERIC_EXCEPTION_MESSAGE));
+        BeanUtils.copyProperties(transactionDto, transactionMaster);
+
+        transactionMaster.setArchiveTransaction(transactionDto.getIsArchiveTransaction());
+        transactionMaster.setAccountMaster(accountMaster);
+
+        transactionRepository.save(transactionMaster);
+        return transactionDto;
+    }
+
+    @Override
     public List<TransactionDto> getAllTransaction(TransactionGetAllDto transactionDto) {
         return transactionCustomRepository.listOfTransaction(transactionDto);
 

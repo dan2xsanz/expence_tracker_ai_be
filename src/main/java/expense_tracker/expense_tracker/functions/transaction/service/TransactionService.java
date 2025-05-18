@@ -14,6 +14,8 @@ public interface TransactionService {
 
     TransactionDto createNewTransaction(TransactionDto transactionDto);
 
+    TransactionDto updateTransaction(TransactionDto transactionDto);
+
     List<TransactionDto> getAllTransaction(TransactionGetAllDto transactionDto);
 
     List<DailyExpenseDto> getAllDailyExpense(Long accountMasterId);

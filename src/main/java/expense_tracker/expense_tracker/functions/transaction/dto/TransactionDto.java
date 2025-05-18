@@ -41,4 +41,6 @@ public class TransactionDto {
     @JsonProperty("paymentType")
     private Integer paymentType;
 
+    private Boolean isArchiveTransaction;
+
 }

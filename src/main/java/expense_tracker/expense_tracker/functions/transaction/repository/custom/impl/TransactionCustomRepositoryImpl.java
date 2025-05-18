@@ -35,7 +35,8 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "note, " +
                 "date, " +
                 "time, " +
-                "paymentType " +
+                "paymentType, " +
+                "isArchiveTransaction " +
                 "FROM TransactionMaster ";
 
         queryBuilder.append(mainQuery);
@@ -54,6 +55,16 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
 
         if (ObjectUtils.isNotEmpty(transactionGetAllDto.getDateFrom()) && ObjectUtils.isNotEmpty(transactionGetAllDto.getDateTo())) {
             queryBuilder.append(String.format("AND date BETWEEN '%s' AND '%s'  ", transactionGetAllDto.getDateFrom(), transactionGetAllDto.getDateTo()));
+
+        }
+
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getDateFrom()) && ObjectUtils.isNotEmpty(transactionGetAllDto.getDateTo())) {
+            queryBuilder.append(String.format("AND date BETWEEN '%s' AND '%s'  ", transactionGetAllDto.getDateFrom(), transactionGetAllDto.getDateTo()));
+
+        }
+
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getIsArchiveTransaction())) {
+            queryBuilder.append("AND isArchiveTransaction = TRUE ");
 
         }
 
