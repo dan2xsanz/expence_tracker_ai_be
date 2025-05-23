@@ -43,4 +43,17 @@ public class TransactionDto {
 
     private Boolean isArchiveTransaction;
 
+    private Boolean isRecurringTransaction;
+
+    @JsonProperty("frequency")
+    private String frequency;
+
+    @JsonProperty("recurringFrom")
+    private LocalDate recurringFrom;
+
+    @JsonProperty("recurringTo")
+    private LocalDateTime recurringTo;
+
+    private Boolean isNoRecurringEnd;
+
 }

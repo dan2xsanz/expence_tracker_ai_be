@@ -31,4 +31,7 @@ public class TransactionGetAllDto {
     private LocalDate dateTo;
 
     private Boolean isArchiveTransaction;
+
+    private Boolean isRecurringTransaction;
+
 }

@@ -36,7 +36,12 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "date, " +
                 "time, " +
                 "paymentType, " +
-                "isArchiveTransaction " +
+                "isArchiveTransaction, " +
+                "frequency, " +
+                "isNoRecurringEnd, " +
+                "isRecurringTransaction, " +
+                "recurringFrom, " +
+                "recurringTo " +
                 "FROM TransactionMaster ";
 
         queryBuilder.append(mainQuery);
@@ -65,6 +70,11 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
 
         if (ObjectUtils.isNotEmpty(transactionGetAllDto.getIsArchiveTransaction())) {
             queryBuilder.append("AND isArchiveTransaction = TRUE ");
+
+        }
+
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getIsRecurringTransaction())) {
+            queryBuilder.append("AND isRecurringTransaction = TRUE ");
 
         }
 
