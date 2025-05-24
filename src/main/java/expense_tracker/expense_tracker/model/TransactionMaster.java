@@ -56,7 +56,7 @@ public class TransactionMaster extends Auditable {
     private LocalDate recurringFrom;
 
     @JsonProperty("recurringTo")
-    private LocalDateTime recurringTo;
+    private LocalDate recurringTo;
 
     @JsonProperty("isNoRecurringEnd")
     private boolean isNoRecurringEnd;

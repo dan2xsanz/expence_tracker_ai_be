@@ -52,7 +52,7 @@ public class TransactionDto {
     private LocalDate recurringFrom;
 
     @JsonProperty("recurringTo")
-    private LocalDateTime recurringTo;
+    private LocalDate recurringTo;
 
     private Boolean isNoRecurringEnd;
 
