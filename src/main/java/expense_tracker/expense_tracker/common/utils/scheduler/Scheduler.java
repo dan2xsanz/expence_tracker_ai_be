@@ -50,7 +50,10 @@ public class Scheduler {
         TransactionMaster newTransaction = new TransactionMaster();
         BeanUtils.copyProperties(transactionMaster, newTransaction);
 
+        newTransaction.setDate(currentDate);
+        newTransaction.setTime(LocalDateTime.now());
         newTransaction.setRecurringTransaction(false);
+        newTransaction.setArchiveTransaction(false);
         newTransaction.setId(null);
 
         switch (transactionMaster.getFrequency()) {
