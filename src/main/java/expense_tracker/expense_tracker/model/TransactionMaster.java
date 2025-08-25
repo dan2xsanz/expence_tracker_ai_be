@@ -61,6 +61,12 @@ public class TransactionMaster extends Auditable {
     @JsonProperty("isNoRecurringEnd")
     private boolean isNoRecurringEnd;
 
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
+
+    @JsonProperty("trn")
+    private String trn;
+
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)
     @JsonBackReference

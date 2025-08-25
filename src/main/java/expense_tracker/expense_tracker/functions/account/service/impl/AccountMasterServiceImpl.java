@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountMasterServiceImpl implements AccountMasterService {
 
@@ -17,34 +19,21 @@ public class AccountMasterServiceImpl implements AccountMasterService {
     private AccountMasterRepository accountMasterRepository;
 
     @Override
-    public AccountMaster createAccount(AccountMasterDto accountMasterDto) throws ExemptionError {
+    public void uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError {
 
-        // VALIDATE ACCOUNT VIA EMAIL
-        if (accountMasterRepository.validateEmail(accountMasterDto.getEmail()).isPresent()) {
-            throw new ExemptionError(ExemptionErrorMessages.EMAIL_ALREADY_EXIST_MESSAGE);
+        AccountMaster accountToUpload = new AccountMaster();
+
+        Optional<AccountMaster> accountMaster = accountMasterRepository.validateEmail(accountMasterDto.getEmail());
+
+        if (accountMaster.isPresent()) {
+            BeanUtils.copyProperties(accountMasterDto, accountToUpload);
+            accountToUpload.setId(accountMaster.get().getId());
+        } else {
+            BeanUtils.copyProperties(accountMasterDto, accountToUpload);
         }
 
-        AccountMaster accountMaster = new AccountMaster();
-        BeanUtils.copyProperties(accountMasterDto, accountMaster);
-
-        accountMasterRepository.save(accountMaster);
-        return accountMaster;
-
+        accountMasterRepository.save(accountToUpload);
     }
-
-
-    @Override
-    public AccountMaster updateAccount(AccountMasterDto accountMasterDto) throws ExemptionError {
-        // VALIDATE ACCOUNT VIA EMAIL
-        AccountMaster accountMaster = accountMasterRepository.validateEmail(accountMasterDto.getEmail()).
-                orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.EMAIL_NOT_FOUND));
-
-        BeanUtils.copyProperties(accountMasterDto, accountMaster, "password");
-        accountMasterRepository.save(accountMaster);
-        return accountMaster;
-
-    }
-
 
     @Override
     public AccountMaster updatePassword(AccountMasterDto accountMasterDto) throws ExemptionError {
