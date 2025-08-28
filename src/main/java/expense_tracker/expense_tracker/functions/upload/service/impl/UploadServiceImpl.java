@@ -6,6 +6,7 @@ import expense_tracker.expense_tracker.functions.upload.dto.UploadRequestDto;
 import expense_tracker.expense_tracker.functions.upload.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 
@@ -18,13 +19,10 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public void uploadAllDataByAccounts(UploadRequestDto uploadRequestDto) {
 
-        // UPLOAD ACCOUNTS
-        if (!uploadRequestDto.getAccountMaster().isEmpty()) {
-            for (AccountMasterDto accountMasterDto : uploadRequestDto.getAccountMaster()) {
-                accountMasterDto.setLastTransmit(LocalDateTime.now());
-                accountMasterService.uploadAccounts(accountMasterDto);
-            }
+        if (ObjectUtils.isEmpty(uploadRequestDto.getAccountMaster())) {
+            AccountMasterDto accountMasterDto = new AccountMasterDto();
+            accountMasterDto.setLastTransmit(LocalDateTime.now());
+            accountMasterService.uploadAccounts(accountMasterDto);
         }
-
     }
 }

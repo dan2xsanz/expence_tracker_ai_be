@@ -19,6 +19,33 @@ public class AccountMasterServiceImpl implements AccountMasterService {
     private AccountMasterRepository accountMasterRepository;
 
     @Override
+    public AccountMaster createAccount(AccountMasterDto accountMasterDto) throws ExemptionError {
+
+        // VALIDATE ACCOUNT VIA EMAIL
+        if (accountMasterRepository.validateEmail(accountMasterDto.getEmail()).isPresent()) {
+            throw new ExemptionError(ExemptionErrorMessages.EMAIL_ALREADY_EXIST_MESSAGE);
+        }
+
+        AccountMaster accountMaster = new AccountMaster();
+        BeanUtils.copyProperties(accountMasterDto, accountMaster);
+
+        return accountMasterRepository.save(accountMaster);
+
+    }
+
+    @Override
+    public AccountMaster updateAccount(AccountMasterDto accountMasterDto) throws ExemptionError {
+        // VALIDATE ACCOUNT VIA EMAIL
+        AccountMaster accountMaster = accountMasterRepository.validateEmail(accountMasterDto.getEmail()).
+                orElseThrow(() -> new ExemptionError(ExemptionErrorMessages.EMAIL_NOT_FOUND));
+
+        BeanUtils.copyProperties(accountMasterDto, accountMaster, "password");
+
+        return accountMasterRepository.save(accountMaster);
+    }
+
+
+    @Override
     public void uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError {
 
         AccountMaster accountToUpload = new AccountMaster();
