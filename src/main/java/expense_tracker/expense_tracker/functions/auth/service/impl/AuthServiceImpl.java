@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -33,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
 
         LoginResponseDto loginResponse = new LoginResponseDto();
         BeanUtils.copyProperties(accountMaster, loginResponse);
+        loginResponse.setLastTransmit(LocalDateTime.now());
 
         return loginResponse;
     }

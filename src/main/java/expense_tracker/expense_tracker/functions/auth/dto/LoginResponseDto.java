@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +23,15 @@ public class LoginResponseDto {
     @JsonProperty("email")
     private String email;
 
+    @JsonProperty("password")
+    private String password;
+
+    @JsonProperty("transmitN")
+    private String transmitN;
+
     private String currency;
+
+    private LocalDateTime lastTransmit;
 
     // TODO: TOKENS BELOW WITH JWT
 
