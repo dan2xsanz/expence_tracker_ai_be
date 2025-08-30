@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    name: snzdatabase
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://snzdatabase.c9ucu0g4evlh.ap-southeast-2.rds.amazonaws.com:3307/snzdatabase
+    username: admin
+    password: lesterDAN09sanz___
+
+  jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: "true"
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dlsanz.asi@gmail.com
+    password: umvm uben yagx msyc
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.trust: smtp.gmail.com
+
+server:
+  servlet:
+    session:
+      cookie:
+        secure: true
+        same-site: strict
+    context-path: /api/
+  port: 8080
+
+chat-bot-key: add-chat-bot-key-here

@@ -8,6 +8,10 @@ public interface AccountMasterService {
 
     AccountMaster createAccount(AccountMasterDto accountMasterDto) throws ExemptionError;
 
+    AccountMaster updateAccount(AccountMasterDto accountMasterDto) throws ExemptionError;
+
+    void uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError;
+
     AccountMaster updatePassword(AccountMasterDto accountMasterDto) throws ExemptionError;
 }
 

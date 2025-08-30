@@ -27,6 +27,15 @@ public class TransactionController {
                 .build();
     }
 
+    @PutMapping("update-transaction")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel updateTransaction(@RequestBody TransactionDto transactionDto) throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(transactionService.updateTransaction(transactionDto))
+                .isSuccess(true)
+                .build();
+    }
+
     @PostMapping("all-transaction")
     @ResponseStatus(HttpStatus.OK)
     public ApiResultModel getAllTransaction(@RequestBody TransactionGetAllDto transactionGetAllDto) throws ExemptionError {

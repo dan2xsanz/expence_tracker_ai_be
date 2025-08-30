@@ -43,10 +43,33 @@ public class TransactionMaster extends Auditable {
     @JsonProperty("paymentType")
     private Integer paymentType;
 
+    @JsonProperty("isArchiveTransaction")
+    private boolean isArchiveTransaction;
+
+    @JsonProperty("isRecurringTransaction")
+    private boolean isRecurringTransaction;
+
+    @JsonProperty("frequency")
+    private String frequency;
+
+    @JsonProperty("recurringFrom")
+    private LocalDate recurringFrom;
+
+    @JsonProperty("recurringTo")
+    private LocalDate recurringTo;
+
+    @JsonProperty("isNoRecurringEnd")
+    private boolean isNoRecurringEnd;
+
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
+
+    @JsonProperty("trn")
+    private String trn;
+
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)
     @JsonBackReference
     private AccountMaster accountMaster;
-
 
 }

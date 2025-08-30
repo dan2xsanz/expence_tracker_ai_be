@@ -35,7 +35,13 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "note, " +
                 "date, " +
                 "time, " +
-                "paymentType " +
+                "paymentType, " +
+                "isArchiveTransaction, " +
+                "frequency, " +
+                "isNoRecurringEnd, " +
+                "isRecurringTransaction, " +
+                "recurringFrom, " +
+                "recurringTo " +
                 "FROM TransactionMaster ";
 
         queryBuilder.append(mainQuery);
@@ -57,6 +63,21 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
 
         }
 
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getDateFrom()) && ObjectUtils.isNotEmpty(transactionGetAllDto.getDateTo())) {
+            queryBuilder.append(String.format("AND date BETWEEN '%s' AND '%s'  ", transactionGetAllDto.getDateFrom(), transactionGetAllDto.getDateTo()));
+
+        }
+
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getIsArchiveTransaction())) {
+            queryBuilder.append("AND isArchiveTransaction = TRUE ");
+
+        }
+
+        if (ObjectUtils.isNotEmpty(transactionGetAllDto.getIsRecurringTransaction())) {
+            queryBuilder.append("AND isRecurringTransaction = TRUE ");
+
+        }
+
         // RETRIEVE PAGINATED SALES TRANSACTION SYNCING DTO FROM THE DATABASE
         return jdbcTemplate.query(queryBuilder.toString(), new BeanPropertyRowMapper<>(TransactionDto.class));
     }
@@ -69,6 +90,7 @@ public class TransactionCustomRepositoryImpl implements TransactionCustomReposit
                 "SUM(amountValue) as amountValue  " +
                 "FROM TransactionMaster  " +
                 "WHERE date  = CURRENT_DATE " +
+                "AND transactionType = 'OUT' " +
                 "AND accountMasterId = '" + accountMasterId + "' " +
                 "GROUP BY categoryType " +
                 "ORDER BY categoryType ASC";

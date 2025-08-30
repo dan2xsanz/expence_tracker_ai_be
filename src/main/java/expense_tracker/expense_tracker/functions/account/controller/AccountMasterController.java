@@ -18,12 +18,22 @@ public class AccountMasterController {
 
     @PostMapping("add-account")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResultModel addTransaction(@RequestBody AccountMasterDto accountMasterDto) throws ExemptionError {
+    public ApiResultModel addAccount(@RequestBody AccountMasterDto accountMasterDto) throws ExemptionError {
         return ApiResultModel.builder()
                 .resultData(accountMasterService.createAccount(accountMasterDto))
                 .isSuccess(true)
                 .build();
     }
+
+    @PutMapping("update-account")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResultModel updateAccount(@RequestBody AccountMasterDto accountMasterDto) throws ExemptionError {
+        return ApiResultModel.builder()
+                .resultData(accountMasterService.updateAccount(accountMasterDto))
+                .isSuccess(true)
+                .build();
+    }
+
 
     @PutMapping("update-password")
     @ResponseStatus(HttpStatus.OK)

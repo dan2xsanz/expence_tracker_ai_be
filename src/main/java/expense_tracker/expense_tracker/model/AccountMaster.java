@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -25,9 +26,22 @@ public class AccountMaster {
     private String lastName;
 
     @JsonProperty("email")
+    @Column(unique = true, nullable = false)  // makes email unique and not null
     private String email;
 
     @JsonProperty("password")
     private String password;
+
+    @JsonProperty("currency")
+    private String currency;
+
+    @JsonProperty("pin")
+    private String pin;
+
+    @JsonProperty("transmitN")
+    private String transmitN;
+
+    @JsonProperty("lastTransmit")
+    private LocalDateTime lastTransmit;
 
 }
