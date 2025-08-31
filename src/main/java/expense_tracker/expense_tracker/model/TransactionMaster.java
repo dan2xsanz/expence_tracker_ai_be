@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Setter
 @Getter
@@ -38,7 +38,7 @@ public class TransactionMaster extends Auditable {
     private LocalDate date;
 
     @JsonProperty("time")
-    private LocalDateTime time;
+    private LocalTime time;
 
     @JsonProperty("paymentType")
     private Integer paymentType;
@@ -66,6 +66,10 @@ public class TransactionMaster extends Auditable {
 
     @JsonProperty("trn")
     private String trn;
+
+    @JsonProperty("trxGuid")
+    @Column(unique = true, nullable = false)
+    private String trxGuid;
 
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)

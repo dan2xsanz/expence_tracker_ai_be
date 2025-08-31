@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 public class TransactionDto {
-
-    private Long accountMasterId;
 
     private Long id;
 
@@ -36,14 +34,18 @@ public class TransactionDto {
     private LocalDate date;
 
     @JsonProperty("time")
-    private LocalDateTime time;
+    private LocalTime time;
 
     @JsonProperty("paymentType")
     private Integer paymentType;
 
-    private Boolean isArchiveTransaction;
+    private Long accountMasterId;
 
-    private Boolean isRecurringTransaction;
+    @JsonProperty("isArchiveTransaction")
+    private boolean isArchiveTransaction;
+
+    @JsonProperty("isRecurringTransaction")
+    private boolean isRecurringTransaction;
 
     @JsonProperty("frequency")
     private String frequency;
@@ -54,6 +56,17 @@ public class TransactionDto {
     @JsonProperty("recurringTo")
     private LocalDate recurringTo;
 
-    private Boolean isNoRecurringEnd;
+    @JsonProperty("isNoRecurringEnd")
+    private boolean isNoRecurringEnd;
+
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
+
+    @JsonProperty("trn")
+    private String trn;
+
+    @JsonProperty("trxGuid")
+    private String trxGuid;
+
 
 }

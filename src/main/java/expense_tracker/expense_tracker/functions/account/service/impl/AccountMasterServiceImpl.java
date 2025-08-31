@@ -46,7 +46,7 @@ public class AccountMasterServiceImpl implements AccountMasterService {
 
 
     @Override
-    public void uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError {
+    public AccountMaster uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError {
 
         AccountMaster accountToUpload = new AccountMaster();
 
@@ -59,7 +59,7 @@ public class AccountMasterServiceImpl implements AccountMasterService {
             BeanUtils.copyProperties(accountMasterDto, accountToUpload);
         }
 
-        accountMasterRepository.save(accountToUpload);
+        return accountMasterRepository.save(accountToUpload);
     }
 
     @Override

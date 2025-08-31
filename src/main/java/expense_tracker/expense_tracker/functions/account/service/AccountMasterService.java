@@ -10,7 +10,7 @@ public interface AccountMasterService {
 
     AccountMaster updateAccount(AccountMasterDto accountMasterDto) throws ExemptionError;
 
-    void uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError;
+    AccountMaster uploadAccounts(AccountMasterDto accountMasterDto) throws ExemptionError;
 
     AccountMaster updatePassword(AccountMasterDto accountMasterDto) throws ExemptionError;
 }
