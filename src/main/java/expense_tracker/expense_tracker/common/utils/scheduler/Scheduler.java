@@ -6,7 +6,6 @@ import expense_tracker.expense_tracker.model.TransactionMaster;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -22,8 +21,8 @@ public class Scheduler {
     private TransactionRepository transactionRepository;
 
     // RUN EVERY MID NIGHT
-    //@Scheduled(fixedRate = 60000)
-    @Scheduled(cron = "0 0 0 * * *")
+    // @Scheduled(fixedRate = 60000)
+    // @Scheduled(cron = "0 0 0 * * *")
     public void recurringTransactions() {
 
         LocalDate currentDate = LocalDate.now();
