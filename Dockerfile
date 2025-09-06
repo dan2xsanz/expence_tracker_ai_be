@@ -13,4 +13,7 @@ COPY --from=builder /app/target/*.jar app.jar
 ENV PORT=8080
 EXPOSE 8080
 
+# Force Spring to use production.yml
+ENV SPRING_PROFILES_ACTIVE=production
+
 CMD ["java", "-jar", "app.jar"]

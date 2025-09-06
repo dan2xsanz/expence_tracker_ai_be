@@ -1,19 +1,16 @@
 spring:
   datasource:
-    name: bmo_db
+    name: dan-lester-9fnv
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bmo_db
-    username: root
-    password: root
+    url: jdbc:mysql://serverless-northeurope.sysp0000.db3.skysql.com:4020/bmo_db
+    username: dbpbf13773524
+    password: Bd7mTsjOodj8Y|A04Ollg.zG
 
   jpa:
     hibernate:
-      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
       ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: "true"
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
 
   mail:
     host: smtp.gmail.com
