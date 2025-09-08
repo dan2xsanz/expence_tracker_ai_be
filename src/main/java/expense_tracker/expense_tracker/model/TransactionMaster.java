@@ -65,7 +65,7 @@ public class TransactionMaster extends Auditable {
     private boolean isDeleted;
 
     @JsonProperty("trn")
-    private String trn;
+        private String trn;
 
     @JsonProperty("trxGuid")
     @Column(unique = true, nullable = false)

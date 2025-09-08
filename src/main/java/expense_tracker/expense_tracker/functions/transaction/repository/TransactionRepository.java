@@ -13,12 +13,13 @@ import java.util.Optional;
 public interface TransactionRepository extends JpaRepository<TransactionMaster, Long> {
 
     @Query(value = "SELECT * FROM TransactionMaster " +
-            "WHERE isRecurringTransaction = true ", nativeQuery = true)
-    List<TransactionMaster> findRecurringTransaction();
-
-
-    @Query(value = "SELECT * FROM TransactionMaster " +
             "WHERE trxGuid =:trxGuid ", nativeQuery = true)
     Optional<TransactionMaster> findTransactionByGuid(@Param("trxGuid") String trxGuid);
+
+
+    @Query(value = "SELECT tm.* FROM TransactionMaster tm " +
+            "LEFT JOIN AccountMaster am ON am.id = tm.accountMasterId " +
+            "WHERE am.email =:email", nativeQuery = true)
+    List<TransactionMaster> findAllTransactionByAccounts(@Param("email") String email);
 
 }

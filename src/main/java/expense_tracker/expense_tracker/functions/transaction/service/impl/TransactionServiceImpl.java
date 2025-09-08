@@ -9,7 +9,10 @@ import expense_tracker.expense_tracker.model.TransactionMaster;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,5 +37,25 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionMaster.setAccountMaster(accountMaster);
         transactionRepository.save(transactionMaster);
+    }
+
+    @Override
+    public List<TransactionDto> downloadTransactionMaster(AccountMaster accountMaster) {
+
+        List<TransactionDto> transactionMasterListResponse = new ArrayList<>();
+
+        List<TransactionMaster> transactionMasterList = transactionRepository.findAllTransactionByAccounts(accountMaster.getEmail());
+
+        if (!ObjectUtils.isEmpty(transactionMasterList)) {
+
+            for (TransactionMaster transactionMaster : transactionMasterList) {
+                TransactionDto transaction = new TransactionDto();
+                BeanUtils.copyProperties(transactionMaster, transaction);
+
+                transactionMasterListResponse.add(transaction);
+            }
+        }
+
+        return transactionMasterListResponse;
     }
 }
