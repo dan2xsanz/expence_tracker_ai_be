@@ -2,6 +2,7 @@ package expense_tracker.expense_tracker.functions.upload.service.impl;
 
 import expense_tracker.expense_tracker.functions.account.dto.AccountMasterDto;
 import expense_tracker.expense_tracker.functions.account.service.AccountMasterService;
+import expense_tracker.expense_tracker.functions.systemsetting.service.SystemSettingService;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
 import expense_tracker.expense_tracker.functions.transaction.service.TransactionService;
 import expense_tracker.expense_tracker.functions.upload.dto.UploadRequestDto;
@@ -18,10 +19,14 @@ import java.time.LocalDateTime;
 public class UploadServiceImpl implements UploadService {
 
     @Autowired
+    private SystemSettingService systemSettingService;
+
+    @Autowired
     private AccountMasterService accountMasterService;
 
     @Autowired
     private TransactionService transactionService;
+
 
     @Override
     public void uploadAllDataByAccounts(UploadRequestDto uploadRequestDto) {
@@ -50,6 +55,11 @@ public class UploadServiceImpl implements UploadService {
 
                 transactionService.uploadTransactions(transaction, accountMaster);
             }
+        }
+
+        // UPLOAD SYSTEM SETTING
+        if (!ObjectUtils.isEmpty(uploadRequestDto.getSystemSetting())) {
+            systemSettingService.uploadSystemSettings(uploadRequestDto.getSystemSetting(), accountMaster);
         }
     }
 }

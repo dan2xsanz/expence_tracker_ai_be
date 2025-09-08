@@ -21,9 +21,10 @@ public class SystemSetting {
     private Long id;
 
     @JsonProperty("userGuid")
+    @Column(unique = true)
     private String userGuid;
 
     @JsonProperty("recursiveDate")
-    private LocalDateTime recursiveDate;
+    private String recursiveDate;
 
 }

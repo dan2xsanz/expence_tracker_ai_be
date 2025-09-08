@@ -2,6 +2,7 @@ package expense_tracker.expense_tracker.functions.upload.dto;
 
 import expense_tracker.expense_tracker.functions.account.dto.AccountMasterDto;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
+import expense_tracker.expense_tracker.model.SystemSetting;
 import lombok.*;
 
 import java.util.Set;
@@ -16,4 +17,6 @@ public class UploadRequestDto {
     private AccountMasterDto accountMaster;
 
     private Set<TransactionDto> transactionMaster;
+
+    private SystemSetting systemSetting;
 }
