@@ -2,6 +2,10 @@ package expense_tracker.expense_tracker.functions.upload.service.impl;
 
 import expense_tracker.expense_tracker.functions.account.dto.AccountMasterDto;
 import expense_tracker.expense_tracker.functions.account.service.AccountMasterService;
+import expense_tracker.expense_tracker.functions.expensecategory.dto.ExpenseCategoryDto;
+import expense_tracker.expense_tracker.functions.expensecategory.service.ExpenseCategoryService;
+import expense_tracker.expense_tracker.functions.incomecategory.dto.IncomeCategoryDto;
+import expense_tracker.expense_tracker.functions.incomecategory.service.IncomeCategoryService;
 import expense_tracker.expense_tracker.functions.systemsetting.service.SystemSettingService;
 import expense_tracker.expense_tracker.functions.transaction.dto.TransactionDto;
 import expense_tracker.expense_tracker.functions.transaction.service.TransactionService;
@@ -17,6 +21,12 @@ import java.time.LocalDateTime;
 
 @Service
 public class UploadServiceImpl implements UploadService {
+
+    @Autowired
+    private ExpenseCategoryService expenseCategoryService;
+
+    @Autowired
+    private IncomeCategoryService incomeCategoryService;
 
     @Autowired
     private SystemSettingService systemSettingService;
@@ -57,9 +67,26 @@ public class UploadServiceImpl implements UploadService {
             }
         }
 
-        // UPLOAD SYSTEM SETTING
-        if (!ObjectUtils.isEmpty(uploadRequestDto.getSystemSetting())) {
-            systemSettingService.uploadSystemSettings(uploadRequestDto.getSystemSetting(), accountMaster);
+        // UPLOAD EXPENSE CATEGORY
+        if (!ObjectUtils.isEmpty(uploadRequestDto.getExpenseCategories())) {
+            for (ExpenseCategoryDto expenseCategoryToUpload : uploadRequestDto.getExpenseCategories()) {
+
+                ExpenseCategoryDto expenseCategory = new ExpenseCategoryDto();
+                BeanUtils.copyProperties(expenseCategoryToUpload, expenseCategory);
+
+                expenseCategoryService.uploadExpenseCategory(expenseCategory, accountMaster);
+            }
+        }
+
+        // UPLOAD INCOME CATEGORY
+        if (!ObjectUtils.isEmpty(uploadRequestDto.getIncomeCategories())) {
+            for (IncomeCategoryDto incomeCategoryToUpload : uploadRequestDto.getIncomeCategories()) {
+
+                IncomeCategoryDto incomeCategory = new IncomeCategoryDto();
+                BeanUtils.copyProperties(incomeCategoryToUpload, incomeCategory);
+
+                incomeCategoryService.uploadIncomeCategory(incomeCategory, accountMaster);
+            }
         }
     }
 }

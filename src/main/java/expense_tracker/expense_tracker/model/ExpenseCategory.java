@@ -25,6 +25,10 @@ public class ExpenseCategory {
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 
+    @JsonProperty("expenseGuid")
+    @Column(unique = true)
+    private String expenseGuid;
+
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)
     @JsonBackReference

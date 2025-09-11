@@ -19,7 +19,7 @@ public class SystemSettingImpl implements SystemSettingService {
     @Override
     public void uploadSystemSettings(SystemSetting systemSettingDto, AccountMaster accountMaster) {
 
-        Optional<SystemSetting> system = systemSettingRepository.findSystemSettingByGuid("ACC" + accountMaster.getEmail());
+        Optional<SystemSetting> system = systemSettingRepository.findSystemSettingByGuid(accountMaster.getEmail());
 
         SystemSetting systemSetting = new SystemSetting();
         BeanUtils.copyProperties(systemSettingDto, systemSetting);
@@ -30,7 +30,7 @@ public class SystemSettingImpl implements SystemSettingService {
 
     @Override
     public SystemSetting downloadSystemSettings(AccountMaster accountMaster) {
-        Optional<SystemSetting> system = systemSettingRepository.findSystemSettingByGuid("ACC" + accountMaster.getEmail());
+        Optional<SystemSetting> system = systemSettingRepository.findSystemSettingByGuid(accountMaster.getEmail());
         SystemSetting systemSetting = new SystemSetting();
 
         if (system.isPresent()) {
@@ -40,5 +40,4 @@ public class SystemSettingImpl implements SystemSettingService {
 
         return systemSetting;
     }
-
 }

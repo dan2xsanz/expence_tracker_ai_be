@@ -25,6 +25,10 @@ public class IncomeCategory {
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 
+    @JsonProperty("incomeGuid")
+    @Column(unique = true)
+    private String incomeGuid;
+
     @ManyToOne
     @JoinColumn(name = "accountMasterId", nullable = false)
     @JsonBackReference
